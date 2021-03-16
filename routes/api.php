@@ -29,12 +29,16 @@ Route::post('/checkMail',[AuthController::class,'checkMail']);
 
 Route::post('/changePassword',[AuthController::class,'changePassword']);
 
+
+
 Route::group(['middleware'=>['auth:sanctum']], function(){ // control middleware !!
                                                              
     Route::post('/logout', [AuthController::class, 'logout']); //ne kete rast /logout nuk duhet mu kon autorizim
                                                                 //por psh user profile ose payment page oe tjerat
                                                                 //ne rast se nuk eshte login nuk ka drejt me i 
                                                                 //pa keto faqe
+    Route::get('/user',[UserController::class,'show']);
+    Route::get('/user/service',[UserController::class,'update']);
     
 });
 

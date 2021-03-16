@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->dateTime('created_at')->default(DB::raw('NOW()'));
             $table->dateTime('updated_at')->nullable();
             $table->date('birthday')->nullable(); 
-            $table->string('phoneNo')->nullable();
+            $table->string('phoneNo')->nullable();//gjinin me shtu
 
         });
     }

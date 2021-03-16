@@ -23,7 +23,7 @@ class AuthController extends Controller
         ]);
 
         if($validator -> fails()){
-            return response()->json(['status_code' => 400, 'message' => 'Bad Request']);
+            return response(['message' => 'Bad Request'],400);
         }
 
         $user = new User();
@@ -49,11 +49,10 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if(Auth::attempt($credentials)){
-        return response()->json([
-            'status_code'=>200,
+        return response([
             'message'=>'You have just signed up!',
             'token'=>$tokenResult
-        ]);
+        ],200);
         }
     }
 
@@ -64,7 +63,7 @@ class AuthController extends Controller
         ]);
 
         if($validator -> fails()){
-            return response()->json(['status_code' => 400, 'message' => 'Bad Request']);
+            return response(['message' => 'Bad Request'],400);
         }
 
         //ne rast se validimi behet ne front atehere ne back nuk ka nevoj per validim por per kontroll
@@ -73,10 +72,9 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
         
         if(!Auth::attempt($credentials)){
-            return response()->json([
-                'status_code'=>500,
+            return response([
                 'message'=>'You must register!' //kjo mundet me u perdor per autorizim por jo ne kete rast per login
-            ]);                                 // sepse nese email eshte i pa sakt atehere duhet mesazh qe
+            ],500);                                 // sepse nese email eshte i pa sakt atehere duhet mesazh qe
         }                                       // ky lloj email nuk eshte i regjistruar per login e jo te i thuash 
                                                 // you must login - my opinion
 
@@ -84,20 +82,18 @@ class AuthController extends Controller
         $tokenResult = $user->createToken('auth')->plainTextToken; //cdo token ruhet ne database !?
         
         
-        return response()->json([
-            'status_code'=>200,
+        return response([
             'token'=> $tokenResult
-        ]);
+        ],200);
 
     }
 
     public function logout(Request $request){
         $request->user()->currentAccessToken()->delete(); // ??  
         // $user->tokens()->delete(); user perkates i fshihen te gjitha tokenet ne database keshtu qe del nga sistemi komplet
-        return response()->json([
-            'status_code'=>200,
+        return response([
             'message'=>'You have been logged out!'
-        ]);
+        ],200);
     }  
 
     public function checkMail(Request $request){
@@ -105,7 +101,7 @@ class AuthController extends Controller
             'email' => 'required|email'
         ]);
         if($validator -> fails()){
-            return response()->json($validator->messages(),400); //
+            return response($validator->messages(),400); //
         }
 
         $checkEmail = User::where('email',$request->email)->get();
@@ -124,15 +120,15 @@ class AuthController extends Controller
                 $message->setBody( '<html><h1 style="color:red;text-align:center;">Pershendetje '.$details['name'].'</h1><p>Kodi valid per te ndryshuar fjalkalimin</p><p><strong>Kodi: '.$details['code'].'</strong></p></html>', 'text/html' );
 
             });
-            return response()->json(['code' => $randomCode]); //dergo kodin dhe statusin
+            return response(['code' => $randomCode],200); //dergo kodin dhe statusin
         }
             
-            return response()->json(['message' => 'This email is not registered!']); //
+            return response(['message' => 'This email is not registered!'],400); //
         
     }
     public function changePassword(Request $request){
         //fronti ma dergon email edhe passwordin un vetem bej update passwordin e userit
         User::where('email', $request->email)->update(['password' => bcrypt($request->password)]);
-        return response()->json(['successful' => 'Your password updated!']);
+        return response(['successful' => 'Your password updated!'],200);
     }
 }
