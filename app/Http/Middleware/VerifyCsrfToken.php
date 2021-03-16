@@ -16,5 +16,6 @@ class VerifyCsrfToken extends Middleware
         "/api/checkMail",
         "/api/changePassword",
         "/api/login",
+        '*'
     ];
 }

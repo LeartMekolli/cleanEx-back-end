@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreatePaymentsTable extends Migration
 {
@@ -17,7 +18,7 @@ class CreatePaymentsTable extends Migration
             $table->id();
         //    $table->bigInteger('service_id')->unsigned();//
             $table->string('method'); //metoda e pageses
-            $table->date('date')->default(DB::raw('NOW()')); //data e pageses
+            $table->dateTime('date')->default(DB::raw('NOW()')); //data e pageses
             $table->string('key'); //
             
         });
