@@ -57,7 +57,6 @@ class ServicesController extends Controller
                 "payment_id"=> null,
                 "job_description"=> $services[$i]->job_description,
                 "price"=> $services[$i]->price,
-                "status"=> $services[$i]->status,
                 "created_at"=> $services[$i]->created_at,
                 "updated_at"=> $services[$i]->updated_at
             ]; 
@@ -88,7 +87,6 @@ class ServicesController extends Controller
             "payment_id"=> null,
             "job_description"=> $service[0]->job_description,
             "price"=> $service[0]->price,
-            "status"=> $service[0]->status,
             "created_at"=> $service[0]->created_at,
             "updated_at"=> $service[0]->updated_at
             ];
