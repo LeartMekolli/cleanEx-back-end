@@ -26,5 +26,4 @@ class Comment extends Model
     }
 
 
-    public $timestamps  = false;
 }

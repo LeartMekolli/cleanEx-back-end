@@ -15,7 +15,6 @@ class Service extends Model
         'payment_id',
         'job_description',
         'price',
-        'created_at',
         'status',
         'deleted',
     ];
@@ -34,5 +33,5 @@ class Service extends Model
     public function comment(){
         return $this->hasMany('App\Models\Comment');//???
     }
-    public $timestamps  = false;
+  
 }
