@@ -18,8 +18,9 @@ class CreatePaymentsTable extends Migration
             $table->id();
         //    $table->bigInteger('service_id')->unsigned();//
             $table->string('method'); //metoda e pageses
-            $table->dateTime('date')->default(DB::raw('NOW()')); //data e pageses
-            $table->string('key'); //
+            $table->dateTime('created_at')->default(DB::raw('NOW()')); //data e pageses
+            $table->string('key');
+            
             
         });
     }
