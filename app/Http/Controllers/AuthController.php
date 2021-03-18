@@ -39,21 +39,21 @@ class AuthController extends Controller
         $user->birthday = $request->birthday;
         $user->phoneNo = $request->phoneNo;
         $user->password = bcrypt($request->password);
+        $user->created_at = now();
         $user->save();
         
        
 
         $currentUser = User::where('email', $request->email)->first();
-        $tokenResult = $currentUser -> createToken('auth')->plainTextToken;
+        $tokenResult = $currentUser->createToken('auth')->plainTextToken;
 
         $credentials = request(['email', 'password']);
 
         if(Auth::attempt($credentials)){
-        return response()->json([
-            'status_code'=>200,
+        return response([
             'message'=>'You have just signed up!',
             'token'=>$tokenResult
-        ]);
+        ],200);
         }
     }
 
@@ -105,7 +105,7 @@ class AuthController extends Controller
             'email' => 'required|email'
         ]);
         if($validator -> fails()){
-            return response()->json($validator->messages(),400); //
+            return response($validator->messages(),400); //
         }
 
         $checkEmail = User::where('email',$request->email)->get();
@@ -124,15 +124,15 @@ class AuthController extends Controller
                 $message->setBody( '<html><h1 style="color:red;text-align:center;">Pershendetje '.$details['name'].'</h1><p>Kodi valid per te ndryshuar fjalkalimin</p><p><strong>Kodi: '.$details['code'].'</strong></p></html>', 'text/html' );
 
             });
-            return response()->json(['code' => $randomCode]); //dergo kodin dhe statusin
+            return response(['code' => $randomCode],200); //dergo kodin dhe statusin
         }
             
-            return response()->json(['message' => 'This email is not registered!']); //
+            return response(['message' => 'This email is not registered!'],400); //
         
     }
     public function changePassword(Request $request){
         //fronti ma dergon email edhe passwordin un vetem bej update passwordin e userit
         User::where('email', $request->email)->update(['password' => bcrypt($request->password)]);
-        return response()->json(['successful' => 'Your password updated!']);
+        return response(['successful' => 'Your password updated!'],200);
     }
 }
