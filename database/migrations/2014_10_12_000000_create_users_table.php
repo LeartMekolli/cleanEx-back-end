@@ -22,10 +22,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->dateTime('created_at')->default(DB::raw('NOW()'));
-            $table->dateTime('updated_at')->nullable();
             $table->date('birthday')->nullable(); 
             $table->string('phoneNo')->nullable();
+            $table->timestamps();
 
         });
     }
