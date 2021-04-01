@@ -7,53 +7,75 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\SendEmail;
 
 
 class AuthController extends Controller
 {
-    
-
-    public function register(Request $request){
+  
+    //confirm_email in register part
+    public function register_confirm_email(Request $request){
         $validator = Validator::make($request->all(),[
-            'name' => 'required',
-            'lastname' => 'required',
-            'username' => 'required|unique:users',
+            'email' => 'required|email',
+            
+        ]);
+
+        if($validator -> fails()){
+            return response()->json($validator->messages(),400);
+        }
+
+        $current_user = User::where('email', $request->email)->first();
+        
+        if($current_user == null){
+            $code = rand(10000,99999);
+            $message_content = [
+                'title'=>'Për të përfunduar regjistrimin vërteto llogarinë',
+                'content' => 'Kodi: ',
+                'code' => $code
+            ];
+            $response = [
+                'message'=>'Your code has been send in your email',
+                'successful'=>'Please confirm this account',
+                'code' => $code
+
+            ];
+             
+            $email_content = new SendEmail($message_content);
+            Mail::to($request->email)->send($email_content);
+            return response()->json($response,200);
+        }
+        
+        return response()->json(['error'=>'This email registered!'],400);
+       
+    }
+   
+    public function register(Request $request){
+
+        $validator = Validator::make($request->all(),[
             'email' => 'required|unique:users',
             'password' => 'required',
         ]);
 
         if($validator -> fails()){
-            return response()->json(['status_code' => 400, 'message' => 'Bad Request']);
+            return response()->json($validator->messages(),400);
         }
+        $new_user = new User();
+        $new_user->email = $request->email;
+        $new_user->password = bcrypt($request->password);
+        $new_user->created_at = now();
+        $new_user->active = 1;
 
-        $user = new User();
-        $user->name = $request->name;
-        
-                                            //per me e mundsi me bo increment pasi qe increment mundet vetem primary key me pas
-                                            //por user_id ska me qen gjith njesoj me id, ne rast se behet delete nje data
-                                            //id auto increment rritet per nje duke llogarit edhe rreshtin qe fshihet
-                                            //kurse user_id merr per baz id me te lart te id-primary key ne ta moment
-        $user->lastname = $request->lastname;
-        $user->username = $request->username;
-        $user->email = $request->email;
-        $user->birthday = $request->birthday;
-        $user->phoneNo = $request->phoneNo;
-        $user->password = bcrypt($request->password);
-        $user->created_at = now();
-        $user->save();
-        
-       
+        $new_user->save();
 
-        $currentUser = User::where('email', $request->email)->first();
-        $tokenResult = $currentUser->createToken('auth')->plainTextToken;
+        $token_result = $new_user->createToken('auth')->plainTextToken;
 
         $credentials = request(['email', 'password']);
 
         if(Auth::attempt($credentials)){
-        return response([
-            'message'=>'You have just signed up!',
-            'token'=>$tokenResult
-        ],200);
+            return response([
+                'success'=>'You have just signed up!',
+                'token'=>$token_result
+            ],200);
         }
     }
 
@@ -75,18 +97,18 @@ class AuthController extends Controller
         if(!Auth::attempt($credentials)){
             return response()->json([
                 'status_code'=>500,
-                'message'=>'You must register!' //kjo mundet me u perdor per autorizim por jo ne kete rast per login
+                'message'=>'Your email or password is not correct!' //kjo mundet me u perdor per autorizim por jo ne kete rast per login
             ]);                                 // sepse nese email eshte i pa sakt atehere duhet mesazh qe
         }                                       // ky lloj email nuk eshte i regjistruar per login e jo te i thuash 
                                                 // you must login - my opinion
 
         $user = User::where('email', $request->email)->first();
-        $tokenResult = $user->createToken('auth')->plainTextToken; //cdo token ruhet ne database !?
+        $token_result = $user->createToken('auth')->plainTextToken; //cdo token ruhet ne database !?
         
         
         return response()->json([
             'status_code'=>200,
-            'token'=> $tokenResult
+            'token'=> $token_result
         ]);
 
     }
@@ -99,40 +121,45 @@ class AuthController extends Controller
             'message'=>'You have been logged out!'
         ]);
     }  
-
-    public function checkMail(Request $request){
-        $validator = Validator::make($request->all(),[ //$request and $request->all()
-            'email' => 'required|email'
-        ]);
-        if($validator -> fails()){
-            return response($validator->messages(),400); //
-        }
-
-        $checkEmail = User::where('email',$request->email)->get();
-        if(count($checkEmail)){
-              $randomCode =rand(10000,99999);
-              $details = array(
-                "email" => $checkEmail[0]->email,
-                "name" => $checkEmail[0]->name,
-                "code" => $randomCode
-              );
-    
-              Mail::send([], [], function ($message) use ($details) {
-              //  $message->from('cleanexstarlabs@gmail.com', 'CleanEX Company');
-                $message->to($details['email']);
-                $message->subject('Ndrysho fjalkalimin ne ClenaEx ('.now().')');
-                $message->setBody( '<html><h1 style="color:red;text-align:center;">Pershendetje '.$details['name'].'</h1><p>Kodi valid per te ndryshuar fjalkalimin</p><p><strong>Kodi: '.$details['code'].'</strong></p></html>', 'text/html' );
-
-            });
-            return response(['code' => $randomCode],200); //dergo kodin dhe statusin
-        }
+   
+    public function change_password_confirm_email(Request $request){
+        $validator = Validator::make($request->all(),[
+            'email' => 'required|email',
             
-            return response(['message' => 'This email is not registered!'],400); //
+        ]);
+
+        if($validator -> fails()){
+            return response()->json($validator->messages(),400);
+        }
+
+        $current_user = User::where('email', $request->email)->first();
         
+        if($current_user != null){
+            $code = rand(10000,99999);
+            $message_content = [
+                'title'=>'Për të ndërruar fjalkalimin vërteto llogarinë ',
+                'content' => 'Kodi: ',
+                'code' => $code
+            ];
+            $response = [
+                'message'=>'Your code has been send in your email',
+                'successful'=>'Please confirm this account',
+                'code' => $code
+
+            ];
+             
+            $email_content = new SendEmail($message_content);
+            Mail::to($request->email)->send($email_content);
+            return response()->json($response,200);
+        }
+        
+        return response()->json(['error'=>'This email is not registered!'],400);
+       
     }
-    public function changePassword(Request $request){
+    public function change_password(Request $request){
         //fronti ma dergon email edhe passwordin un vetem bej update passwordin e userit
-        User::where('email', $request->email)->update(['password' => bcrypt($request->password)]);
+        User::where('email', $request->email)->update(['password' => bcrypt($request->password),'updated_at'=>now()]);
         return response(['successful' => 'Your password updated!'],200);
     }
 }
+
