@@ -1,0 +1,260 @@
+[
+    {
+        "city": "Prishtin\u00eb",
+        "lat": "42.6667",
+        "lng": "21.1667",
+        "population": "204725",
+        "population_proper": "204725"
+    },
+    {
+        "city": "Prizren",
+        "lat": "42.2167",
+        "lng": "20.7333",
+        "population": "186986",
+        "population_proper": "85119"
+    },
+    {
+        "city": "Ferizaj",
+        "lat": "42.3667",
+        "lng": "21.1667",
+        "population": "108610",
+        "population_proper": "42628"
+    },
+    {
+        "city": "Pej\u00eb",
+        "lat": "42.6500",
+        "lng": "20.3000",
+        "population": "96450",
+        "population_proper": "48962"
+    },
+    {
+        "city": "Gjakov\u00eb",
+        "lat": "42.3833",
+        "lng": "20.4333",
+        "population": "94556",
+        "population_proper": "40827"
+    },
+    {
+        "city": "Gjilan",
+        "lat": "42.4700",
+        "lng": "21.4700",
+        "population": "90178",
+        "population_proper": "54239"
+    },
+    {
+        "city": "Podujev\u00eb",
+        "lat": "42.9167",
+        "lng": "21.2000",
+        "population": "88499",
+        "population_proper": "23453"
+    },
+    {
+        "city": "Mitrovic\u00eb",
+        "lat": "42.8833",
+        "lng": "20.8667",
+        "population": "84235",
+        "population_proper": "84235"
+    },
+    {
+        "city": "Vushtrri",
+        "lat": "42.8222",
+        "lng": "20.9694",
+        "population": "69870",
+        "population_proper": "26964"
+    },
+    {
+        "city": "Suharek\u00eb",
+        "lat": "42.3800",
+        "lng": "20.8219",
+        "population": "59722",
+        "population_proper": "10422"
+    },
+    {
+        "city": "Lipjan",
+        "lat": "42.5300",
+        "lng": "21.1386",
+        "population": "57605",
+        "population_proper": "6870"
+    },
+    {
+        "city": "Rahovec",
+        "lat": "42.3994",
+        "lng": "20.6547",
+        "population": "56208",
+        "population_proper": "15892"
+    },
+    {
+        "city": "Malishev\u00eb",
+        "lat": "42.4828",
+        "lng": "20.7458",
+        "population": "54613",
+        "population_proper": "3395"
+    },
+    {
+        "city": "Skenderaj",
+        "lat": "42.7467",
+        "lng": "20.7886",
+        "population": "50858",
+        "population_proper": "9372"
+    },
+    {
+        "city": "Viti",
+        "lat": "42.3167",
+        "lng": "21.3500",
+        "population": "46987",
+        "population_proper": "4924"
+    },
+    {
+        "city": "De\u00e7an",
+        "lat": "42.5333",
+        "lng": "20.2833",
+        "population": "40019",
+        "population_proper": "3803"
+    },
+    {
+        "city": "Istog",
+        "lat": "42.7833",
+        "lng": "20.4833",
+        "population": "39289",
+        "population_proper": "5115"
+    },
+    {
+        "city": "Klin\u00eb",
+        "lat": "42.6217",
+        "lng": "20.5778",
+        "population": "38496",
+        "population_proper": "5542"
+    },
+    {
+        "city": "Kamenic\u00eb",
+        "lat": "42.5839",
+        "lng": "21.5750",
+        "population": "36085",
+        "population_proper": "7331"
+    },
+    {
+        "city": "Dragash",
+        "lat": "42.0611",
+        "lng": "20.6528",
+        "population": "34827",
+        "population_proper": "1098"
+    },
+    {
+        "city": "Fush\u00eb Kosov\u00eb",
+        "lat": "42.6300",
+        "lng": "21.1200",
+        "population": "33997",
+        "population_proper": "12919"
+    },
+    {
+        "city": "Ka\u00e7anik",
+        "lat": "42.2467",
+        "lng": "21.2553",
+        "population": "33409",
+        "population_proper": "15634"
+    },
+    {
+        "city": "Shtime",
+        "lat": "42.4333",
+        "lng": "21.0333",
+        "population": "27324",
+        "population_proper": "7225"
+    },
+    {
+        "city": "Obiliq",
+        "lat": "42.6900",
+        "lng": "21.0778",
+        "population": "21549",
+        "population_proper": "6864"
+    },
+    {
+        "city": "Leposaviq",
+        "lat": "43.1000",
+        "lng": "20.8000",
+        "population": "18600",
+        "population_proper": "18600"
+    },
+    {
+        "city": "Zve\u00e7an",
+        "lat": "42.9000",
+        "lng": "20.8333",
+        "population": "16650",
+        "population_proper": "16650"
+    },
+    {
+        "city": "Zubin Potok",
+        "lat": "42.9167",
+        "lng": "20.6833",
+        "population": "15200",
+        "population_proper": "15200"
+    },
+    {
+        "city": "Sht\u00ebrpc\u00eb",
+        "lat": "42.2333",
+        "lng": "21.0167",
+        "population": "13630",
+        "population_proper": "13630"
+    },
+    {
+        "city": "Gra\u00e7anic\u00eb",
+        "lat": "42.6000",
+        "lng": "21.2000",
+        "population": "10675",
+        "population_proper": "10675"
+    },
+    {
+        "city": "Novob\u00ebrd\u00eb",
+        "lat": "42.6000",
+        "lng": "21.4333",
+        "population": "9670",
+        "population_proper": "9670"
+    },
+    {
+        "city": "Hani i Elezit",
+        "lat": "42.1475",
+        "lng": "21.2992",
+        "population": "9403",
+        "population_proper": "2533"
+    },
+    {
+        "city": "Junik",
+        "lat": "42.4761",
+        "lng": "20.2775",
+        "population": "6084",
+        "population_proper": "6053"
+    },
+    {
+        "city": "Ranillug",
+        "lat": "42.4920",
+        "population": "5800",
+        "population_proper": "5800"
+    },
+    {
+        "city": "Mamush\u00eb",
+        "lat": "42.3167",
+        "lng": "20.7167",
+        "population": "5507",
+        "population_proper": "5507"
+    },
+    {
+        "city": "Partesh",
+        "lat": "42.4019",
+        "lng": "21.4336",
+        "population": "5300",
+        "population_proper": "5300"
+    },
+    {
+        "city": "Kllokot",
+        "lat": "42.3667",
+        "lng": "21.3833",
+        "population": "2556",
+        "population_proper": "2556"
+    },
+    {
+        "city": "Gllogovc",
+        "lat": "42.5872",
+        "lng": "20.8206",
+        "population": "369",
+        "population_proper": "369"
+    }
+]

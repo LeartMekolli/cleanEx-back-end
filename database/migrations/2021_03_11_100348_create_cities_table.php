@@ -15,7 +15,7 @@ class CreateCitiesTable extends Migration
     {
         Schema::create('cities', function (Blueprint $table) {
             $table->id();
-            $table->string('city'); //emri i qytetit
+            $table->string('city')->unique(); //emri i qytetit
         });
     }
 

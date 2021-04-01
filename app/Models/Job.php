@@ -16,5 +16,5 @@ class Job extends Model
         return $this->hasMany('App\Models\Service');
     }
 
-    public $timestamps  = false;
+    
 }

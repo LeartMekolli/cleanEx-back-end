@@ -20,11 +20,11 @@ class CreateServicesTable extends Migration
             $table->bigInteger('job_id')->unsigned();
             $table->bigInteger('payment_id')->unsigned()->nullable(); //ne momentin qe bene payment servisi i behet visible
             $table->string('job_description');
-            $table->double('price', 15, 8);
-            $table->dateTime('created_at')->default(DB::raw('NOW()')); 
-            $table->string('status')->default(DB::raw('false')); 
-            $table->string('deleted')->default(DB::raw('false')); 
+            $table->double('price', 15, 8); 
+            $table->tinyInteger('status');  // 1 is true , 0 is false
+            $table->tinyInteger('deleted')->default(DB::raw(0));  // 1 is true , 0 is false
             //$table->json('service_area');
+            $table->timestamps();
             
         }); 
     }

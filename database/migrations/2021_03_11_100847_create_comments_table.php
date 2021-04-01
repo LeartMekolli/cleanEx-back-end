@@ -19,8 +19,9 @@ class CreateCommentsTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('service_id')->unsigned();
             $table->string('comment'); //komenti
-            $table->dateTime('comment_date')->default(DB::raw('NOW()')); //data e komentimit
+           /// $table->dateTime('comment_date')->default(DB::raw('NOW()')); //data e komentimit
             $table->string('rating'); //prej 1 deri ne 10
+            $table->timestamps();//created_at and updated_at
             
         });
     }
