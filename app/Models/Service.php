@@ -4,34 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Post;
 
 class Service extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-        'job_id',
-        'payment_id',
-        'job_description',
-        'price',
-        'status',
-        'deleted',
+        'name'
     ];
-
-    public function user(){
-        return $this->belongsTo('App\Models\User');
+    public function post(){
+        return $this->hasMany('App\Models\Post');
     }
-    
-
-    public function payment(){
-        return $this->belongsTo('App\Models\Payment');
-    }
-    public function job(){
-        return $this->belongsTo('App\Models\Job'); //hasMany or hasOne ? return $this->hasOne('App\Models\Job','job_id','id');
-    }
-    public function comment(){
-        return $this->hasMany('App\Models\Comment');//???
-    }
-  
 }

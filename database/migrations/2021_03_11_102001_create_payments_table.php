@@ -16,10 +16,10 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-        //    $table->bigInteger('service_id')->unsigned();//
-            $table->string('method'); //metoda e pageses
-            $table->dateTime('created_at')->default(DB::raw('NOW()')); //data e pageses
-            $table->string('key');
+            $table->bigInteger('method_id')->unsigned();//metoda e pageses
+            $table->string('stripe_id');
+            $table->double('amount',5,2);
+            $table->timestamps();
             
             
         });

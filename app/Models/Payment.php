@@ -9,10 +9,11 @@ class Payment extends Model
 {
     use HasFactory;
 
-    public function service(){
-        return $this->hasOne('App\Models\Services');
+    public function Post(){
+        return $this->hasOne('App\Models\Post');
     }
-    
+    public function method(){
+        return $this->belongsTo('App\Models\Method');
+    }
 
-    public $timestamps  = false;
 }

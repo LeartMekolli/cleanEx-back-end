@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,9 +19,9 @@ Route::get('/', function () {
 }); 
 
 Route::group(['middleware'=>['auth:sanctum']], function(){
-    Route::post('/createService', [ServicesController::class, 'createService']);
-    Route::get('/getServices', [ServicesController::class, 'getServices']);
-    Route::get('/getService/{id}', [ServicesController::class, 'getServicesById']);
-    Route::get('/deleteService/{id}', [ServicesController::class, 'deleteServiceById']);
-    Route::patch('/updateService/{id}', [ServicesController::class, 'updateServiceById']);
+    Route::post('/createPost', [PostController::class, 'createPost']);
+    Route::get('/getPosts', [PostController::class, 'getPosts']);
+    Route::get('/getPost/{id}', [PostController::class, 'getPostById']);
+    Route::get('/deletePost/{id}', [PostController::class, 'deletePostById']);
+    Route::patch('/updatePost/{id}', [PostController::class, 'updatePostById']);
 });

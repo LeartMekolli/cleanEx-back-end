@@ -5,16 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class City extends Model
+class RequestMessage extends Model
 {
     use HasFactory;
 
-    public function region(){
-        return $this->hasMany('App\Models\Region');
+    public function user(){
+        return $this->belongsTo('App\Models\User');
     }
-    public function country(){
-        return $this->belongsTo('App\Models\Country');
+    public function post(){
+        return $this->belongsTo('App\Models\Post');
     }
-
     public $timestamps = false;
 }
