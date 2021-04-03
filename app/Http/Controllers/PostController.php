@@ -35,7 +35,7 @@ class PostController extends Controller
     }
 
     public function get_services(){ //merri punet nga databaza
-        $services = Service::select('id','name')->orderBy('id')->get();
+        $services = Service::select('id','service_name')->orderBy('id')->get();
         return response($services,200);
     }
 
@@ -59,25 +59,185 @@ class PostController extends Controller
         return response()->json(['message'=>'Post created successfully!'], 200);
     }
 
-    public function get_posts(){ //getAll posts 
-        $posts = Post::where([['active','=',1],['payment_status','=',1]])->orderBy('created_at', 'DESC')->get(); 
+    /**
+     * Queries mysql
+     * @param param is value of string wich is going be split and return in string again
+     * @return string
+     */
+    private function get_like_query($param){
+        $array = explode(",",$param);
         
-        $response = array(count($posts));
+        $query = ' and ( location like ';
 
-        for ($i=0; $i < count($posts); $i++) { 
-            $response[$i] = [
-                "id" => $posts[$i]->id,
-                "service"=> $posts[$i]->service->name,
-                "title"=> $posts[$i]->title,
-                "location"=> $posts[$i]->location,
-                "price"=> $posts[$i]->price
-            ]; 
-         
+        foreach ($array as $item) {
+            $query = $query .'"%'.$item.'%"';
+            if(next($array)!=null){
+                $query = $query .' or location like ';
+            }
         }
-        return response($response,200);
-                                                     
+        $query = $query.')';
+        return $query;
     }
+
+
+    /**
+     * Queries mysql
+     * @param check_statement default value is empty string
+     * @return string
+     */
+    private function get_queries($check_statement = ''){
+        $select_query = 'select details.first_name, details.last_name ,services.service_name 
+        ,location, title, content, price, posts.created_at from posts, users, details, services 
+        where posts.user_id = users.id and users.detail_id = details.id and 
+        posts.service_id = services.id and posts.payment_status = 1 and 
+        posts.active = 1 '.$check_statement;
+
+        return $select_query;
+    }
+
+
+    /**
+     * Service query mysql
+     * @param  service_name $service name 
+     * @return string
+     */
+    private function get_service_query($service_name){
+        return ' and services.service_name = "'.$service_name.'"';
+    }
+
+
+    /**
+     * Price query mysql
+     * @param price this parameters is coming as string min-max price 
+     * @return string
+     */
+    private function get_price_query($price){
+        $price_array = explode("-",$price);
+        $min_price = (int)$price_array[0];
+        $max_price = (int)$price_array[1];
+        $string = ' and ( posts.price between '.$min_price.' and '.$max_price.') ';
+        return $string;
+
+    }
+
+
+    public function get_posts_by_queries(Request $request){
+        
+        //location
+        //price
+        //service
+        
+        // || $request->service == null || $request->price == null
+        
+        if($request->location == null && $request->service == null && $request->price == null){ 
+            /* $posts = DB::table('posts')
+            ->join('services','posts.service_id','=','services.id')
+            ->join('users','posts.user_id','=','users.id')
+            ->join('details','users.detail_id','=','details.id')
+            ->select('details.first_name','details.last_name','services.service_name','location','title','content','price','posts.created_at')
+            ->where([['posts.payment_status','=',1],['posts.active','=',1]])->get();  */
+
+            
+            $posts = DB::select($this->get_queries());
+            if(count($posts)==0){
+                return response(['posts'=>'Not found'],404);
+            }
+            return response($posts,200);
+
+            
+        }elseif($request->location != null && $request->service == null && $request->price == null){
+            
+            $like_query = $this->get_like_query($request->location); 
+            $posts = DB::select($this->get_queries($like_query));
+            if(count($posts)==0){
+                return response(['posts'=>'Not found'],404);
+            } 
+            return response($posts,200);
+
+        }elseif($request->location != null && $request->service != null && $request->price == null){
+            $like_query = $this->get_like_query($request->location); 
+            $service_query = $this->get_service_query($request->service);
+            $posts = DB::select($this->get_queries($like_query.$service_query));
+
+            if(count($posts)==0){
+                return response(['posts'=>'Not found'],404);
+            }
+            return response($posts,200);
+
+        }elseif($request->location != null && $request->service == null && $request->price != null){
+            $like_query = $this->get_like_query($request->location); 
+            $price_query = $this->get_price_query($request->price);
+            $posts = DB::select($this->get_queries($like_query.$price_query));
+            if(count($posts)==0){
+                return response(['posts'=>'Not found'],404);
+            }
+
+            return response($posts,200);
+
+        }elseif($request->location != null && $request->service != null && $request->price != null){
+            $like_query = $this->get_like_query($request->location); 
+            $service_query = $this->get_service_query($request->service);
+            $price_query = $this->get_price_query($request->price);
+            $posts = DB::select($this->get_queries($like_query.$service_query.$price_query));
+
+            if(count($posts)==0){
+                return response(['posts'=>'Not found'],404);
+            }
+            return response($posts,200);
+
+        }elseif($request->location == null && $request->service != null && $request->price != null){
+            $service_query = $this->get_service_query($request->service);
+            $price_query = $this->get_price_query($request->price);
+            $posts = DB::select($this->get_queries($service_query.$price_query));
+
+            if(count($posts)==0){
+                return response(['posts'=>'Not found'],404);
+            }
+
+            return response($posts,200);
+
+        }elseif($request->location == null && $request->service == null && $request->price != null){
+
+            $price_query = $this->get_price_query($request->price);
+            $posts = DB::select($this->get_queries($price_query));
+
+            if(count($posts)==0){
+                return response(['posts'=>'Not found'],404);
+            }
+            return response($posts,200);
+
+        }else{
+            $service_query = $this->get_service_query($request->service);
+            $posts = DB::select($this->get_queries($service_query));
+
+            if(count($posts)==0){
+                return response(['posts'=>'Not found'],404);
+            }
+            return response($posts,200);
+
+        }
+        
+        
+
+        //first notation
+    /*  SELECT column_Name1,column_name2,......
+        From tbl_name1,tbl_name2,tbl_name3
+        where tbl_name1.column_name = tbl_name2.column_name 
+        and tbl_name2.column_name = tbl_name3.column_name */
+
+        //second notation
+       /*  SELECT table1.col,table2.col,table3.col 
+        FROM table1 
+        INNER JOIN 
+        (table2 INNER JOIN table3 
+        ON table3.id=table2.id) 
+        ON table1.id(f-key)=table2.id
+        AND //add any additional filters HERE */
+
     
+    }
+
+
     public function get_post_by_id($id){  // by specific Id
 
         $post = Post::where([['id','=',$id],['active','=',1],['payment_status','=',1]])->get(); 
@@ -94,7 +254,7 @@ class PostController extends Controller
                     "gender" => $post[0]->user->detail->gender
                 //    "age" => Carbon::parse($posts[$i]->user->detail->birthday)->age
                 ],
-                "service"=> $post[0]->service->name,
+                "service"=> $post[0]->service->service_name,
               //  "payment_id"=> null,
                 "content"=> $post[0]->content,
                 "title"=> $post[0]->title,

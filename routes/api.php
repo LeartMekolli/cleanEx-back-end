@@ -49,7 +49,7 @@ Route::group(['middleware'=>['auth:sanctum']], function(){ // control middleware
     Route::get('/user/posts',[PostController::class,'get_user_posts']);
 
     Route::post('/offerhelp/createPost',[PostController::class,'create_post']); //endpoint url 
-    Route::get('/seekhelp/posts',[PostController::class,'get_posts']);
+ //   Route::get('/seekhelp/posts',[PostController::class,'get_posts_by_queries']);
     Route::get('/seekhelp/posts/{id}',[PostController::class,'get_post_by_id']);
 
     Route::patch('/seekhelp/posts/{id}',[PostController::class,'update_post_by_id']);
@@ -64,3 +64,5 @@ Route::get('/countries',[PostController::class,'get_countries']);
 Route::get('/cities',[PostController::class,'get_cities']);
 Route::get('/regions',[PostController::class,'get_regions']);
 Route::get('/genders',[PostController::class,'get_genders']);
+
+Route::get('/seekhelp/posts',[PostController::class,'get_posts_by_queries']);

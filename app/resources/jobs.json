@@ -1,17 +1,17 @@
 [
     {
-        "name": "Programer"
+        "service_name": "Programer"
     },
     {
-        "name": "Fizioterapit"
+        "service_name": "Fizioterapit"
     },
     {
-        "name": "Hidro Instalues"
+        "service_name": "Hidro Instalues"
     },
     {
-        "name": "Elektricist"
+        "service_name": "Elektricist"
     },
     {
-        "name": "Dizajner"
+        "service_name": "Dizajner"
     }
 ]

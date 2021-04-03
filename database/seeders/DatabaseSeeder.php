@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+         
 
         $array_cities = file_get_contents(base_path('app\resources\qytetet_kosoves.json'));
 
@@ -50,18 +51,28 @@ class DatabaseSeeder extends Seeder
         $job_data = json_decode($json_job_string, true);
 
         foreach($job_data as $item){
-            $check_item = \App\Models\Service::where('name',$item['name'])->first();
+            $check_item = \App\Models\Service::where('service_name',$item['service_name'])->first();
             if($check_item == null){
-                \App\Models\Service::create(['name'=>$item['name']]);
+                \App\Models\Service::create(['service_name'=>$item['service_name']]);
             }
             
             
         }
         \App\Models\Gender::create(['gender_type'=>'Mashkull']);
         \App\Models\Gender::create(['gender_type'=>'Femër']);
-        \App\Models\Gender::create(['gender_type'=>'Tjetër']);
+        \App\Models\Gender::create(['gender_type'=>'Tjetër']); 
+        
 
 
 
+
+
+        \App\Models\User::factory(10)->create();
+        \App\Models\Detail::factory(10)->create();
+        for ($i=1; $i < 11; $i++) { 
+            \App\Models\User::where('id',$i)->update(['detail_id'=>$i]);
+        }
+
+        \App\Models\Post::factory(100)->create();
     }
 }
