@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Detail;
 use App\Models\Comment;
 use Illuminate\Support\Carbon;
 
@@ -37,22 +39,12 @@ class UserController extends Controller
         return response($response,200);
         
     }
-    public function update(Request $request){
-        
-            // bledari te dhenat mbrapa pervec nr te telefonit tjerat duhet me i kontrollu mos me i len te zbrazeta
-            User::where('id',Auth::user()->id)->update([
-                
-                //image
-                //birthday
-                //adressa?
-                'updated_at' => now(),
-            ]);
 
-            return response(['message'=>'Your details successfuly updated!'],200);
-        
-        
-    } 
+ 
+    
 
+    
+     
 
     //useri kur te fshihet duhet me i bo deleted-ne database edhe komentet 
     //dmth ne database delete feature e bone 1 or true edhe per services 

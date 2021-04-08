@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendEmail;
+use App\Models\Detail;
 
 
 class AuthController extends Controller
@@ -161,5 +162,41 @@ class AuthController extends Controller
         User::where('email', $request->email)->update(['password' => bcrypt($request->password),'updated_at'=>now()]);
         return response(['successful' => 'Your password updated!'],200);
     }
+       
+  public function get_all_users() {
+    $users = User::get()->toJson(JSON_PRETTY_PRINT);
+    return response($users, 200);
+  }
+  public function get_user($id) {
+    if (User::where('id', $id)->exists()) {
+        $user = User::where('id', $id)->get()->toJson(JSON_PRETTY_PRINT);
+        return response($user, 200);
+      } else {
+        return response()->json([
+          "message" => "User not found"
+        ], 404);
+      }
+  }
+ /* public function updateUser(Request $request, $id)
+{
+        $user = User::findOrFail($id);
+        $user->update($request->all());
+        $request->user()->fill([
+        'password' => Hash::make($request->newPassword)
+        ])->save();
+        return response()->json([
+            "message" => "Password updated successfully"
+        ], 200);
+    } */
+    public function update_detail(Request $request, $id)
+    {
+        $detail = Detail::findOrFail($id);
+        $detail->update($request->all());
+         return response()->json([
+            "message" => "Details updated successfully"
+        ], 200);
+        
+    }
+
 }
 

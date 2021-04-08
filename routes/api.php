@@ -45,7 +45,16 @@ Route::group(['middleware'=>['auth:sanctum']], function(){ // control middleware
     Route::patch('/user/details',[UserController::class,'update']); //PUT - update a resource (by replacing it with a new version)*
                                                                     //PATCH - update part of a resource (if available and appropriate)
     Route::delete('/user/delete',[UserController::class,'delete_user']);
+
+    Route::get('users', [AuthController::class,'get_all_users']);
+    Route::get('users/{id}', [AuthController::class,'get_user']);
+   // Route::put('users/{id}', [AuthController::class,'update_user']);
+    Route::put('details/{id}', [AuthController::class,'update_detail']);
     
+    
+    
+
+
     Route::get('/user/posts',[PostController::class,'get_user_posts']);
 
     Route::post('/offerhelp/createPost',[PostController::class,'create_post']); //endpoint url 

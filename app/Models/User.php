@@ -27,7 +27,7 @@ class User extends Authenticatable
         
     ]; */
 
-    
+ //   protected $fillable = ['detail_id','email', 'password'];
     /**
      * The attributes that should be hidden for arrays.
      *

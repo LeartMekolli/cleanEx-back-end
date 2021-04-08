@@ -9,6 +9,8 @@ class Detail extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['region_id','gender_id','first_name','last_name','birthday','image','phone_number','street_name','street_number','postal_code'];
+    
     public function region(){
         return $this->belongsTo('App\Models\Region');
     }
@@ -20,4 +22,5 @@ class Detail extends Model
     public function gender(){
         return $this->belongsTo('App\Models\Gender');
     }
+    
 }
