@@ -17,7 +17,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
+  /*   protected $fillable = [
         'name',
         'lastname',
         'username',
@@ -25,7 +25,7 @@ class User extends Authenticatable
         'birthday',
         'phoneNo',
         
-    ];
+    ]; */
 
     
     /**
@@ -33,10 +33,10 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $hidden = [
+   /*  protected $hidden = [
         'password',
         'remember_token',
-    ];
+    ]; */
 
     /**
      * The attributes that should be cast to native types.
@@ -51,7 +51,14 @@ class User extends Authenticatable
     public function comment(){
         return $this->hasMany('App\Models\Comment');
     }
-    public function service(){
-        return $this->hasMany('App\Models\Service');
+    public function post(){
+        return $this->hasMany('App\Models\Post');
+    }
+    public function requestmessage(){
+        return $this->hasMany('App\Models\RequestMessage');
+    }
+
+    public function detail(){
+        return $this->belongsTo('App\Models\Detail');
     }
 }

@@ -1,110 +1,17 @@
 [
     {
-        "name": "Administartë"
+        "service_name": "Programer"
     },
     {
-        "name": "Industri"
+        "service_name": "Fizioterapit"
     },
     {
-        "name": "Arkitekturë"
+        "service_name": "Hidro Instalues"
     },
     {
-        "name": "Auditim"
+        "service_name": "Elektricist"
     },
     {
-        "name": "Banka"
-    },
-    {
-        "name": "Bioteknologji"
-    },
-    {
-        "name": "Bujqësi"
-    },
-    {
-        "name": "Edukim"
-    },
-    {
-        "name": "Ekonomi"
-    },
-    {
-        "name": "Elektronikë"
-    },
-    {
-        "name": "Farmaci"
-    },
-    {
-        "name": "Financa"
-    },
-    {
-        "name": "Gastronomi"
-    },
-    {
-        "name": "Hoteleri"
-    },
-    {
-        "name": "Informatikë"
-    },
-    {
-        "name": "Juridik"
-    },
-    {
-        "name": "Konsulencë"
-    },
-    {
-        "name": "Kontabilitet"
-    },
-    {
-        "name": "Logjistikë"
-    },
-    {
-        "name": "Marketing & PR"
-    },
-    {
-        "name": "Media"
-    },
-    {
-        "name": "Mekanikë"
-    },
-    {
-        "name": "Menaxhment"
-    },
-    {
-        "name": "Mikpritje"
-    },
-    {
-        "name": "Ndërtimtari"
-    },
-    {
-        "name": "Shëndetësi"
-    },
-    {
-        "name": "Përkthim"
-    },
-    {
-        "name": "Shërbime Jo-Qeveritare"
-    },
-    {
-        "name": "Shërbime shëndetësore"
-    },
-    {
-        "name": "Shitje"
-    },
-    {
-        "name": "Shkencë & Hulumtim"
-    },
-    {
-        "name": "Sigurim"
-    },
-    {
-        "name": "Telekomunikim"
-    },
-    {
-        "name": "Transport"
-    },
-    {
-        "name": "Turizëm"
-    },
-    {
-        "name": "Të tjera"
+        "service_name": "Dizajner"
     }
 ]
