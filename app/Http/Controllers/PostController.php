@@ -40,7 +40,7 @@ class PostController extends Controller
     }
 
 
-    //
+    
     public function create_post(Request $request){
 
         $authenticated_user = Auth()->user()->id;
@@ -86,7 +86,7 @@ class PostController extends Controller
      * @return string
      */
     private function get_queries($check_statement = ''){
-        $select_query = 'select details.first_name, details.last_name ,services.service_name 
+        $select_query = 'select details.first_name, details.last_name ,services.service_name, services.icon 
         ,location, title, content, price, posts.created_at from posts, users, details, services 
         where posts.user_id = users.id and users.detail_id = details.id and 
         posts.service_id = services.id and posts.payment_status = 1 and 
@@ -102,7 +102,18 @@ class PostController extends Controller
      * @return string
      */
     private function get_service_query($service_name){
-        return ' and services.service_name = "'.$service_name.'"';
+        $array = explode(",",$service_name);
+        
+        $query = ' and ( services.service_name like ';
+
+        foreach ($array as $item) {
+            $query = $query .'"%'.$item.'%"';
+            if(next($array)!=null){
+                $query = $query .' or services.service_name like ';
+            }
+        }
+        $query = $query.')';
+        return $query;
     }
 
 
@@ -126,115 +137,52 @@ class PostController extends Controller
         //location
         //price
         //service
-        
-        // || $request->service == null || $request->price == null
+        $posts;
         
         if($request->location == null && $request->service == null && $request->price == null){ 
-            /* $posts = DB::table('posts')
-            ->join('services','posts.service_id','=','services.id')
-            ->join('users','posts.user_id','=','users.id')
-            ->join('details','users.detail_id','=','details.id')
-            ->select('details.first_name','details.last_name','services.service_name','location','title','content','price','posts.created_at')
-            ->where([['posts.payment_status','=',1],['posts.active','=',1]])->get();  */
-
-            
             $posts = DB::select($this->get_queries());
-            if(count($posts)==0){
-                return response(['posts'=>'Not found'],404);
-            }
-            return response($posts,200);
 
-            
         }elseif($request->location != null && $request->service == null && $request->price == null){
-            
             $like_query = $this->get_like_query($request->location); 
-            $posts = DB::select($this->get_queries($like_query));
-            if(count($posts)==0){
-                return response(['posts'=>'Not found'],404);
-            } 
-            return response($posts,200);
+            $posts = DB::select($this->get_queries($like_query));      
 
         }elseif($request->location != null && $request->service != null && $request->price == null){
             $like_query = $this->get_like_query($request->location); 
             $service_query = $this->get_service_query($request->service);
             $posts = DB::select($this->get_queries($like_query.$service_query));
 
-            if(count($posts)==0){
-                return response(['posts'=>'Not found'],404);
-            }
-            return response($posts,200);
-
         }elseif($request->location != null && $request->service == null && $request->price != null){
             $like_query = $this->get_like_query($request->location); 
             $price_query = $this->get_price_query($request->price);
             $posts = DB::select($this->get_queries($like_query.$price_query));
-            if(count($posts)==0){
-                return response(['posts'=>'Not found'],404);
-            }
-
-            return response($posts,200);
-
+            
         }elseif($request->location != null && $request->service != null && $request->price != null){
             $like_query = $this->get_like_query($request->location); 
             $service_query = $this->get_service_query($request->service);
             $price_query = $this->get_price_query($request->price);
             $posts = DB::select($this->get_queries($like_query.$service_query.$price_query));
 
-            if(count($posts)==0){
-                return response(['posts'=>'Not found'],404);
-            }
-            return response($posts,200);
-
         }elseif($request->location == null && $request->service != null && $request->price != null){
             $service_query = $this->get_service_query($request->service);
             $price_query = $this->get_price_query($request->price);
             $posts = DB::select($this->get_queries($service_query.$price_query));
 
-            if(count($posts)==0){
-                return response(['posts'=>'Not found'],404);
-            }
-
-            return response($posts,200);
-
         }elseif($request->location == null && $request->service == null && $request->price != null){
-
             $price_query = $this->get_price_query($request->price);
-            $posts = DB::select($this->get_queries($price_query));
-
-            if(count($posts)==0){
-                return response(['posts'=>'Not found'],404);
-            }
-            return response($posts,200);
+            $posts = DB::select($this->get_queries($price_query));           
 
         }else{
             $service_query = $this->get_service_query($request->service);
-            $posts = DB::select($this->get_queries($service_query));
-
-            if(count($posts)==0){
-                return response(['posts'=>'Not found'],404);
-            }
-            return response($posts,200);
+            $posts = DB::select($this->get_queries($service_query));           
 
         }
         
-        
+        if(count($posts)==0){
+            return response(['posts'=>'Not found'],404);
+        }
+        return response($posts,200);
 
-        //first notation
-    /*  SELECT column_Name1,column_name2,......
-        From tbl_name1,tbl_name2,tbl_name3
-        where tbl_name1.column_name = tbl_name2.column_name 
-        and tbl_name2.column_name = tbl_name3.column_name */
-
-        //second notation
-       /*  SELECT table1.col,table2.col,table3.col 
-        FROM table1 
-        INNER JOIN 
-        (table2 INNER JOIN table3 
-        ON table3.id=table2.id) 
-        ON table1.id(f-key)=table2.id
-        AND //add any additional filters HERE */
-
-    
+   
     }
 
 

@@ -74,12 +74,14 @@ class AuthController extends Controller
         if(Auth::attempt($credentials)){
             return response([
                 'success'=>'You have just signed up!',
-                'token'=>$token_result
+                'token'=>$token_result,
+                'email'=> $request->email
             ],200);
         }
     }
 
     public function login(Request $request){
+        
         $validator = Validator::make($request->all(),[
             'email' => 'required|email',
             'password' => 'required',
@@ -95,21 +97,23 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
         
         if(!Auth::attempt($credentials)){
-            return response()->json([
-                'status_code'=>500,
+            return response([
                 'message'=>'Your email or password is not correct!' //kjo mundet me u perdor per autorizim por jo ne kete rast per login
-            ]);                                 // sepse nese email eshte i pa sakt atehere duhet mesazh qe
+            ],404);                                 // sepse nese email eshte i pa sakt atehere duhet mesazh qe
         }                                       // ky lloj email nuk eshte i regjistruar per login e jo te i thuash 
                                                 // you must login - my opinion
 
         $user = User::where('email', $request->email)->first();
+        if($user == null){
+            return response(['error'=>'This email is not registered'],404);
+        }
         $token_result = $user->createToken('auth')->plainTextToken; //cdo token ruhet ne database !?
         
         
         return response()->json([
-            'status_code'=>200,
-            'token'=> $token_result
-        ]);
+            'token'=> $token_result,
+            'email'=> $request->email
+        ],200);
 
     }
 

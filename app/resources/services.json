@@ -1,0 +1,38 @@
+[
+    {
+        "service_name": "Vlerësimi i pasurisë",
+        "icon": "Rivleresimi.jpg"
+    },
+    {
+        "service_name": "Zdrukthtari",
+        "icon": "Zdrukthtari.jpg"
+    },
+    {
+        "service_name": "Riparimi i tavanit",
+        "icon": "Tavani.jpg"
+    },
+    {
+        "service_name": "Pastrim",
+        "icon": "Pastrim.jpg"
+    },
+    {
+        "service_name": "Programer",
+        "icon": "Programer.jpg"
+    },
+    {
+        "service_name": "Fizioterapit",
+        "icon": "Fizioterapit.jpg"
+    },
+    {
+        "service_name": "Hidro Instalues",
+        "icon": "Hidro Instalues.jpg"
+    },
+    {
+        "service_name": "Elektricist",
+        "icon": "Elektricist.jpeg"
+    },
+    {
+        "service_name": "Dizajner",
+        "icon": "Dizajner.jpg"
+    }
+]

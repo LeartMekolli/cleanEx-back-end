@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
 
 class UserController extends Controller
 {
+
     public function show(){
 
 
@@ -76,5 +77,32 @@ class UserController extends Controller
         
     }
 
+
+
+
+
+        //check user if user's details is empty or not
+    //if it is empty he/she cant create new posts, if it is not empty he/she can create a post
+
+    public function check_user_details(){
+
+        $user = User::where('id',Auth::user()->id)->first();
+         //   $check_user_details = User::where([['id','=',Auth::user()->id],['detail_id','=',null]])->count();
+
+   
+       if($user->detail_id == null){
+           return response(['error'=>'If you do not have any details in your profile, you can not create post!'],404);
+       }
+
+       $response = [
+        "first_name" => $user->detail->first_name,
+        "last_name" => $user->detail->last_name,
+        "gender" => $user->detail->gender->gender_type,
+        "email" => $user->email,
+        "phone_number" => $user->detail->phone_number,
+        "country" => $user->detail->region->city->country->country_name,
+       ];
+       return response($response,200);
+    }
 
 }

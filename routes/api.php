@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\StripePaymentController;
 
 
 /*
@@ -54,6 +55,9 @@ Route::group(['middleware'=>['auth:sanctum']], function(){ // control middleware
 
     Route::patch('/seekhelp/posts/{id}',[PostController::class,'update_post_by_id']);
     Route::delete('/seekhelp/posts/{id}',[PostController::class,'delete_post_by_id']);
+    
+    Route::get('/user/details',[UserController::class,'check_user_details']);
+    
 
 });
 Route::get('/services',[PostController::class,'get_services']);
@@ -66,3 +70,8 @@ Route::get('/regions',[PostController::class,'get_regions']);
 Route::get('/genders',[PostController::class,'get_genders']);
 
 Route::get('/seekhelp/posts',[PostController::class,'get_posts_by_queries']);
+
+
+Route::get('/stripe', [StripePaymentController::class,'stripe']);
+Route::post('/stripe', [StripePaymentController::class,'stripe_post']);
+

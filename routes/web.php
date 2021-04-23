@@ -25,3 +25,6 @@ Route::group(['middleware'=>['auth:sanctum']], function(){
     Route::get('/deletePost/{id}', [PostController::class, 'deletePostById']);
     Route::patch('/updatePost/{id}', [PostController::class, 'updatePostById']);
 });
+
+
+Route::get('/countries',[PostController::class,'get_countries']);

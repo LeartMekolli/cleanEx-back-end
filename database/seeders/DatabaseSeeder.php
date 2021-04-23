@@ -46,14 +46,14 @@ class DatabaseSeeder extends Seeder
 
 
 
-        $json_job_string = file_get_contents(base_path('app\resources\jobs.json'));
+        $json_job_string = file_get_contents(base_path('app\resources\services.json'));
 
         $job_data = json_decode($json_job_string, true);
 
         foreach($job_data as $item){
             $check_item = \App\Models\Service::where('service_name',$item['service_name'])->first();
             if($check_item == null){
-                \App\Models\Service::create(['service_name'=>$item['service_name']]);
+                \App\Models\Service::create(['service_name'=>$item['service_name'],'icon'=>$item['icon']]);
             }
             
             
