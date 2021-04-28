@@ -42,12 +42,12 @@ Route::group(['middleware'=>['auth:sanctum']], function(){ // control middleware
                                                                 //por psh user profile ose payment page oe tjerat
                                                                 //ne rast se nuk eshte login nuk ka drejt me i 
                                                                 //pa keto faqe
-    Route::get('/user',[UserController::class,'show']);
-    Route::patch('/user/details',[UserController::class,'update']); //PUT - update a resource (by replacing it with a new version)*
+    //Route::get('/user',[UserController::class,'show']);
+    
                                                                     //PATCH - update part of a resource (if available and appropriate)
     Route::delete('/user/delete',[UserController::class,'delete_user']);
     
-    Route::get('/user/posts',[PostController::class,'get_user_posts']);
+  
 
     Route::post('/offerhelp/createPost',[PostController::class,'create_post']); //endpoint url 
  //   Route::get('/seekhelp/posts',[PostController::class,'get_posts_by_queries']);
@@ -55,11 +55,18 @@ Route::group(['middleware'=>['auth:sanctum']], function(){ // control middleware
 
     Route::patch('/seekhelp/posts/{id}',[PostController::class,'update_post_by_id']);
     Route::delete('/seekhelp/posts/{id}',[PostController::class,'delete_post_by_id']);
+    Route::get('/user',[UserController::class,'show']);
+    Route::get('/user/posts',[PostController::class,'get_user_posts']);
+    Route::patch('/user/details',[UserController::class,'update']); //PUT - update a resource (by replacing it with a new version)*
     
-    Route::get('/user/details',[UserController::class,'check_user_details']);
-    
-
 });
+
+Route::get('/user/details',[UserController::class,'check_user_details']);
+
+
+
+
+
 Route::get('/services',[PostController::class,'get_services']);
 
 

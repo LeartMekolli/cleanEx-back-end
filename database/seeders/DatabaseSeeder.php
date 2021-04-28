@@ -67,12 +67,12 @@ class DatabaseSeeder extends Seeder
 
 
 
-        \App\Models\User::factory(10)->create();
+        /* \App\Models\User::factory(10)->create();
         \App\Models\Detail::factory(10)->create();
         for ($i=1; $i < 11; $i++) { 
             \App\Models\User::where('id',$i)->update(['detail_id'=>$i]);
-        }
+        } */
 
-        \App\Models\Post::factory(100)->create();
+       // \App\Models\Post::factory(100)->create();
     }
 }

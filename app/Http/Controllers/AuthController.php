@@ -88,7 +88,7 @@ class AuthController extends Controller
         ]);
 
         if($validator -> fails()){
-            return response()->json(['status_code' => 400, 'message' => 'Bad Request']);
+            return response(['message' => 'Bad Request'],400);
         }
 
         //ne rast se validimi behet ne front atehere ne back nuk ka nevoj per validim por per kontroll
@@ -99,13 +99,13 @@ class AuthController extends Controller
         if(!Auth::attempt($credentials)){
             return response([
                 'message'=>'Your email or password is not correct!' //kjo mundet me u perdor per autorizim por jo ne kete rast per login
-            ],404);                                 // sepse nese email eshte i pa sakt atehere duhet mesazh qe
+            ],400);                                 // sepse nese email eshte i pa sakt atehere duhet mesazh qe
         }                                       // ky lloj email nuk eshte i regjistruar per login e jo te i thuash 
                                                 // you must login - my opinion
 
         $user = User::where('email', $request->email)->first();
         if($user == null){
-            return response(['error'=>'This email is not registered'],404);
+            return response(['error'=>'This email is not registered'],400);
         }
         $token_result = $user->createToken('auth')->plainTextToken; //cdo token ruhet ne database !?
         
@@ -118,8 +118,10 @@ class AuthController extends Controller
     }
 
     public function logout(Request $request){
-        $request->user()->currentAccessToken()->delete(); // ??  
+        //$request->user()->currentAccessToken()->delete(); // ??  
         // $user->tokens()->delete(); user perkates i fshihen te gjitha tokenet ne database keshtu qe del nga sistemi komplet
+        $token = $request->user()->token();
+        $token->revoke();
         return response()->json([
             'status_code'=>200,
             'message'=>'You have been logged out!'

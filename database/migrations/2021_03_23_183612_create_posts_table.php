@@ -21,7 +21,7 @@ class CreatePostsTable extends Migration
             $table->string('location'); //reagioni ku mundesh me punu
             $table->string('title',150); 
             $table->string('content',500);
-            $table->double('price', 5, 2); 
+            $table->double('price', 10, 2); 
             $table->tinyInteger('payment_status');  // 1 is true , 0 is false
             $table->tinyInteger('active')->default(DB::raw(1));  // 1 is true , 0 is false
             $table->timestamps();
